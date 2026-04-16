@@ -52,7 +52,7 @@ df = load_data()
 
 
 # DATA VALIDATION
-st.subheader("Step 1: Data Validation")
+st.subheader("1: Data Validation")
 
 col1, col2, col3 = st.columns(3)
 
@@ -89,7 +89,7 @@ st.success("Dataset validated successfully — no missing values, binary fields 
 st.markdown("---")
 
 # DATA CLEANING & FEATURE ENGINEERING
-df = df.drop(['CustomerId', 'Surname'], axis=1)
+df = df.drop(['Year', 'CustomerId', 'Surname'], axis=1)
 
 # Age Group
 df['AgeGroup'] = pd.cut(
@@ -141,7 +141,7 @@ credit_options = ["Low (<500)", "Medium (500-699)", "High (700+)"]
 credit = st.sidebar.multiselect("Credit Band", credit_options, default=credit_options)
 
 gender_options = sorted(df['Gender'].unique())
-gender = st.sidebar.multiselect("⚥ Gender", gender_options, default=gender_options)
+gender = st.sidebar.multiselect("Gender", gender_options, default=gender_options)
 
 filtered_df = df[
     (df['Geography'].isin(geo)) &
@@ -153,7 +153,7 @@ filtered_df = df[
 st.sidebar.markdown(f"**Showing:** {len(filtered_df):,} of {len(df):,} customers")
 
 # KPIs
-st.subheader("Step 2: Key Performance Indicators")
+st.subheader("2: Key Performance Indicators")
 
 churn_rate = filtered_df['Exited'].mean()
 total_customers = len(filtered_df)
@@ -187,7 +187,7 @@ col8.metric("Geographic Risk Index", f"{geo_risk * 100:.2f}%",
 st.markdown("---")
 
 # CHURN DISTRIBUTION BY SEGMENTS
-st.subheader("Step 3: Churn Distribution Across Segments")
+st.subheader("3: Churn Distribution Across Segments")
 
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "Age Group", "Tenure Group", "Credit Band", "Balance Segment", "Products & Cards"
@@ -251,7 +251,7 @@ with tab5:
 st.markdown("---")
 
 # GEOGRAPHY ANALYSIS
-st.subheader("Step 4: Geography-wise Churn Analysis")
+st.subheader("4: Geography-wise Churn Analysis")
 
 col1, col2 = st.columns(2)
 
@@ -280,7 +280,7 @@ with col2:
 st.markdown("---")
 
 # GENDER ANALYSIS
-st.subheader("⚥ Step 5: Gender-based Churn Analysis")
+st.subheader("5: Gender-based Churn Analysis")
 
 gender_churn = filtered_df.groupby('Gender')['Exited'].agg(['mean', 'sum', 'count']).reset_index()
 gender_churn.columns = ['Gender', 'Churn Rate', 'Churned', 'Total']
@@ -296,7 +296,7 @@ with col2:
 st.markdown("---")
 
 # CHURNED VS RETAINED PROFILES
-st.subheader("Step 6: Churned vs Retained Customer Profiles")
+st.subheader("6: Churned vs Retained Customer Profiles")
 
 churned = filtered_df[filtered_df['Exited'] == 1]
 retained = filtered_df[filtered_df['Exited'] == 0]
@@ -328,7 +328,7 @@ with col2:
 st.markdown("---")
 
 # HIGH VALUE CUSTOMER ANALYSIS
-st.subheader("Step 7: High-Value Customer Churn Analysis")
+st.subheader("7: High-Value Customer Churn Analysis")
 
 if len(high_value_df) > 0:
     col1, col2, col3 = st.columns(3)
@@ -364,7 +364,7 @@ else:
 st.markdown("---")
 
 # SALARY VS BALANCE IMPACT
-st.subheader("Step 8: Salary vs Balance Impact on Churn")
+st.subheader("8: Salary vs Balance Impact on Churn")
 
 salary_balance = filtered_df.groupby('Exited')[['EstimatedSalary', 'Balance']].mean().reset_index()
 salary_balance['Exited'] = salary_balance['Exited'].map({0: 'Retained', 1: 'Churned'})
@@ -380,7 +380,7 @@ st.dataframe(salary_balance, hide_index=True)
 st.markdown("---")
 
 # REVENUE RISK
-st.subheader("Step 9: Revenue Risk Analysis")
+st.subheader("9: Revenue Risk Analysis")
 
 total_balance = filtered_df['Balance'].sum()
 churned_balance = filtered_df[filtered_df['Exited'] == 1]['Balance'].sum()
@@ -409,7 +409,7 @@ if total_balance > 0:
 st.markdown("---")
 
 # SEGMENT CONTRIBUTION
-st.subheader("Step 10: Customer Segment Contribution")
+st.subheader("10: Customer Segment Contribution")
 
 col1, col2 = st.columns(2)
 
@@ -438,7 +438,7 @@ with col4:
 st.markdown("---")
 
 # ENGAGEMENT ANALYSIS
-st.subheader("Step 11: Engagement & Activity Analysis")
+st.subheader("11: Engagement & Activity Analysis")
 
 engage_churn = filtered_df.groupby('IsActiveMember')['Exited'].agg(['mean', 'sum', 'count']).reset_index()
 engage_churn['IsActiveMember'] = engage_churn['IsActiveMember'].map({0: 'Inactive', 1: 'Active'})
