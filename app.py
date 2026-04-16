@@ -46,6 +46,8 @@ def load_data():
 
 df = load_data()
 
+st.write(df.columns.tolist())
+
 # DATA VALIDATION
 st.subheader("Step 1: Data Validation")
 
