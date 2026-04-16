@@ -49,7 +49,7 @@ def load_data():
 
 df = load_data()
 
-st.write(df.columns.tolist())
+
 
 # DATA VALIDATION
 st.subheader("Step 1: Data Validation")
@@ -275,7 +275,7 @@ with col2:
         observed=True
     ).round(3)
     pivot = pivot * 100
-    st.dataframe(pivot.style.format("{:.1f}%").background_gradient(cmap='Reds'))
+    st.dataframe(pivot.style.format("{:.1f}%"))
 
 st.markdown("---")
 
