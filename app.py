@@ -41,7 +41,10 @@ st.markdown("---")
 # LOAD DATA
 @st.cache_data
 def load_data():
-    df = pd.read_csv("European_Bank dataset.csv")
+    import os
+    BASE = os.path.dirname(os.path.abspath(__file__))
+    csv_path = os.path.join(BASE, "European_Bank dataset.csv")
+    df = pd.read_csv(csv_path)
     return df
 
 df = load_data()
@@ -384,7 +387,7 @@ churned_balance = filtered_df[filtered_df['Exited'] == 1]['Balance'].sum()
 retained_balance = filtered_df[filtered_df['Exited'] == 0]['Balance'].sum()
 
 col1, col2, col3 = st.columns(3)
-col1.metric("Total Portfolio Balance", f"€total_balance:,.0f")
+col1.metric("Total Portfolio Balance", f"€{total_balance:,.0f}")
 col2.metric("Balance at Churn Risk", f"€{churned_balance:,.0f}")
 col3.metric("Retained Balance", f"€{retained_balance:,.0f}")
 
@@ -485,4 +488,4 @@ with col2:
 
 st.markdown("---")
 st.caption("Customer Segmentation & Churn Analytics | European Central Bank")
-
+st.caption("*Every recommendation and key finding is based on current data ONLY and is not dynamic with respect to change in data or filters.")
